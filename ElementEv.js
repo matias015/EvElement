@@ -25,36 +25,56 @@ class ElementEv {
     return this
   }
 
+
   // SEARCHING
+
+  inParent(parent){
+    if(typeof parent == "string") parent = document.querySelector(parent)
+    else if(parent instanceof ElementEv) parent = parent.get()
+    this.parentSearch = parent
+    return this
+  }
+
   whereClass(clss, cb) {
-    this.element = document.querySelector('.' + clss)
+    if(this.parentSearch) this.element = this.parentSearch.querySelector('.' + clss)
+    else this.element = document.querySelector('.' + clss)
+    
     if (cb && !this.element) {
       this.element = cb()
     }
+    this.parentSearch=null;
     return this
   }
 
   whereId(id, cb) {
-    this.element = document.querySelector('#' + id)
+    if(this.parentSearch) this.element = this.parentSearch.querySelector('#' + id)
+    else this.element = document.querySelector('#' + id)
     if (cb && !this.element) {
       this.element = cb()
     }
+    this.parentSearch=null;
     return this
   }
 
   whereTag(tag, cb) {
-    this.element = document.querySelector(tag)
+    if(this.parentSearch) this.element = this.parentSearch.querySelector(tag)
+    else this.element = document.querySelector(tag)
+
     if (cb && !this.element) {
       this.element = cb()
     }
+    this.parentSearch=null;
     return this
   }
 
   whereProp(values, cb) {
-    this.element = document.querySelector(`[${values[0]}=${values[1]}]`)
+    if(this.parentSearch) this.element = this.parentSearch.querySelector(`[${values[0]}=${values[1]}]`)
+    else this.element = document.querySelector(`[${values[0]}=${values[1]}]`)
+
     if (cb && !this.element) {
       this.element = cb()
     }
+    this.parentSearch=null;
     return this
   }
 
@@ -249,9 +269,9 @@ class ElementEv {
   value() {
     field = this.element
     if (field.type === 'checkbox') {
-      return field.checked;
+      return field.checked? field.value : null;
     } else if (field.type === 'radio') {
-      return field.checked;
+      return field.checked? field.value : null;
     } else {
       return field.value;
     }
@@ -304,6 +324,9 @@ class ElementEv {
     return copy
   }
 
+  prop(name){
+    return this.element[name]
+  }
 
   // Others
 
@@ -343,30 +366,3 @@ function create(tag, content) {
   return element
 }
 
-
-const button = element().whereId('xd')
-const section = element().whereTag('section')
-const h1 = element().whereTag('h1')
-
-h1.interception(function() {
-  console.log(8);
-}, {
-  whilenot: () => console.log(9)
-})
-
-h1.style({
-  'backgroundColor': 'red'
-})
-
-button.when('click').make(function() {
-
-  const ul = create('<ul>').withAttrs({ 'class': "item class2" }).withChildren([
-    create('<li>', 1),
-    create('<li>', 2),
-    create('<li>', 3)
-  ])
-
-  section.appendChild(ul)
-
-
-})
