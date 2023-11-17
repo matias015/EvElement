@@ -38,6 +38,16 @@ class ElementEv {
 
     this.interceptObject = null
 
+
+
+    this.renderfunc = null
+
+    this.states = {
+
+
+
+    }
+
   }
 
 
@@ -186,13 +196,15 @@ class ElementEv {
 
   // EVENTS
 
-  when(ev,cb) {
+  when(ev, cb) {
 
     this.lastEventSetted = ev
 
-    return this
 
-    if(cb) this.make(cb)
+
+    if (cb) this.make(cb)
+
+    return this
 
   }
 
@@ -216,41 +228,7 @@ class ElementEv {
 
 
 
-  toggle(el, clss) {
 
-    const e = document.querySelector(el)
-
-    this.make(function() {
-
-      e.classList.toggle(clss)
-
-    })
-
-    return this
-
-  }
-
-
-
-  propToggle(el, values) {
-
-    this.make(function() {
-
-      if (el.attrIs(values[0], values[1])) {
-
-        el.attr(values[0], values[2])
-
-      } else {
-
-        el.attr(values[0], values[1])
-
-      }
-
-    })
-
-    return this
-
-  }
 
 
 
@@ -394,7 +372,7 @@ class ElementEv {
 
   withText(c) {
 
-    this.lastElementCreated.setContent(c)
+    this.lastElementCreated.setText(c)
 
     return this
 
@@ -692,9 +670,9 @@ class ElementEv {
 
   }
 
-  
 
-  addClass(c){
+
+  addClass(c) {
 
     this.element.classList.add(c)
 
@@ -702,7 +680,7 @@ class ElementEv {
 
   }
 
-  
+
 
   removeClass(c) {
 
@@ -712,7 +690,7 @@ class ElementEv {
 
   }
 
-  
+
 
   toggleClass(c) {
 
@@ -795,6 +773,28 @@ class ElementEv {
     let rect = this.element.getBoundingClientRect();
 
     return { 'top': rect.top, 'right': rect.right, 'bottom': rect.bottom, 'left': rect.left }
+
+  }
+
+
+
+  propToggle(key, v1, v2) {
+
+    if (this.attrIs(key, v1)) {
+
+      this.attr(key, v2)
+
+    } else {
+
+      this.attr(key, v1)
+
+    }
+
+
+
+
+
+    return this
 
   }
 
@@ -914,7 +914,7 @@ class ElementEv {
 
   }
 
-  
+
 
   touchDraggable() {
 
@@ -965,6 +965,54 @@ class ElementEv {
 
 
   }
+
+
+
+  state(key, initial) {
+
+    this.states[key] = initial;
+
+    return this
+
+  }
+
+
+
+  setState(key, value) {
+
+    this.states[key] = value
+
+    this.render()
+
+    return this
+
+  }
+
+
+
+  setRender(cb) {
+
+    this.renderfunc = cb
+
+    return this
+
+  }
+
+
+
+  render() {
+
+    this.clear().print()
+
+    this.renderfunc(this, this.states)
+
+    return this
+
+  }
+
+
+
+
 
 
 
@@ -1036,4 +1084,14 @@ function __ElementEv__multiFilterConcat__(list, prefix) {
 
 
 
-  }
+}
+
+
+
+
+
+function _find(query) {
+
+  return new ElementEv(document.querySelector(query), true)
+
+                                  }
