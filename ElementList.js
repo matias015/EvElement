@@ -1,193 +1,120 @@
 class ElementList {
-
-
-
   constructor() {
-
-    this.list = []
-
+    this.list = [];
   }
 
-
-
-  inParent(parent){
-
-    if(typeof parent == "string") parent = document.querySelector(parent)
-
-    else if(parent instanceof ElementEv) parent = parent.get()
-
-    this.parentSearch = parent
-
-    return this
-
+  get(){
+    return this.list
   }
 
+  hasElements(){
+    return this.list.length>0
+  }
 
+  inParent(parent) {
+    if (typeof parent == "string") parent = document.querySelector(parent);
+    else if (parent instanceof ElementEv) parent = parent.get();
+
+    this.parentSearch = parent;
+
+    return this;
+  }
 
   whereClass(clss, cb) {
+    let elements = [];
 
-    let elements = []
+    if (this.parentSearch)
+      elements = this.parentSearch.querySelectorAll("." + clss);
+    else elements = document.querySelectorAll("." + clss);
 
-    if(this.parentSearch) elements = this.parentSearch.querySelectorAll('.' + clss)
-
-    else elements = document.querySelectorAll('.' + clss)
-
-
-
-    for (element of elements) {
-
-      this.list.push(new ElementEv(element, true))
-
+    for (let element of elements) {
+      this.list.push(new ElementEv(element, true));
     }
 
-    return this
-
+    return this;
   }
-
-
 
   whereId(id, cb) {
+    let elements = [];
 
-    let elements = []
+    if (this.parentSearch)
+      elements = this.parentSearch.querySelectorAll("#" + id);
+    else elements = document.querySelectorAll("#" + id);
 
-    if(this.parentSearch) elements = this.parentSearch.querySelectorAll('#' + id)
-
-    else elements = document.querySelectorAll('#' + id)
-
-
-
-    for (element of elements) {
-
-      this.list.push(new ElementEv(element, true))
-
+    for (let element of elements) {
+      this.list.push(new ElementEv(element, true));
     }
 
-    return this
-
+    return this;
   }
-
-
 
   whereTag(tag, cb) {
+    let elements = [];
 
-    let elements = []
+    if (this.parentSearch) elements = this.parentSearch.querySelectorAll(tag);
+    else elements = document.querySelectorAll(tag);
 
-    if(this.parentSearch) elements = this.parentSearch.querySelectorAll(tag)
-
-    else elements = document.querySelectorAll(tag)
-
-
-
-    for (element of elements) {
-
-      this.list.push(new ElementEv(element, true))
-
+    for (let element of elements) {
+      this.list.push(new ElementEv(element, true));
     }
 
-    return this
-
+    return this;
   }
-
-
 
   whereProp(values, cb) {
+    let elements = [];
 
-    let elements = []
+    if (this.parentSearch)
+      elements = this.parentSearch.querySelectorAll(
+        `[${values[0]}=${values[1]}]`
+      );
+    else elements = document.querySelectorAll(`[${values[0]}=${values[1]}]`);
 
-    if(this.parentSearch) elements = this.parentSearch.querySelectorAll(`[${values[0]}=${values[1]}]`)
-
-    else elements = document.querySelectorAll(`[${values[0]}=${values[1]}]`)
-
-
-
-    for (element of elements) {
-
-      this.list.push(new ElementEv(element, true))
-
+    for (let element of elements) {
+      this.list.push(new ElementEv(element, true));
     }
 
-    return this
-
+    return this;
   }
-
-  
 
   event(ev, cb) {
-
-    this.list.forEach(function(elementEv){
-
-      elementEv.element.addEventListener(ev, function(event){
-
+    this.list.forEach(function (elementEv) {
+      elementEv.element.addEventListener(ev, function (event) {
         event.element = elementEv;
 
-        cb(event)
+        cb(event);
+      });
+    });
 
-      })
-
-    })
-
-    return this
-
+    return this;
   }
 
+  print() {
+    let elementsToShow = [];
 
-
-  print(){
-
-    let elementsToShow=[]
-
-    this.list.forEach(function(e){
-
-        elementsToShow.push(e.element.outerHTML)
-
-    })
+    this.list.forEach(function (e) {
+      elementsToShow.push(e.element.outerHTML);
+    });
 
     console.log(elementsToShow);
 
-    return this
-
+    return this;
   }
 
+  values(type) {
+    let values = [];
 
+    if (type == "checkbox") {
+      this.list.forEach(function (elementEvCheckbox) {
+        if (elementEvCheckbox.get().checked)
+          values.push(elementEvCheckbox.element.value);
+      });
 
-  values(type){
-
-    let values = []
-
-
-
-    if(type == 'checkbox'){
-
-        this.list.forEach(function(elementEvCheckbox){
-
-            if(elementEvCheckbox.get().checked) values.push(elementEvCheckbox.element.value)
-
-        })
-
-    return values
-
+      return values;
     }
-
   }
-
-
-
 }
 
-
-
-
-
-
-
-    function elements() {
-
-        return new ElementList()
-
-    }
-
-
-
-
-
-    
+function elements() {
+  return new ElementList();
+}
