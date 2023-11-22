@@ -1,17 +1,24 @@
-class ElementList {
-  constructor() {
+function ElementList() {
+
     this.list = [];
+}
+
+ElementList.GLOBAL_PARENT = null;
+
+
+  ElementList.SetGlobalParent=function(query){
+    ElementList.GLOBAL_PARENT = document.querySelector(query);
   }
 
-  get(){
+  ElementList.prototype.get = function(){
     return this.list
   }
 
-  hasElements(){
+  ElementList.prototype.hasElements = function(){
     return this.list.length>0
   }
 
-  inParent(parent) {
+  ElementList.prototype.inParent = function(parent) {
     if (typeof parent == "string") parent = document.querySelector(parent);
     else if (parent instanceof ElementEv) parent = parent.get();
 
@@ -20,7 +27,7 @@ class ElementList {
     return this;
   }
 
-  whereClass(clss, cb) {
+  ElementList.prototype.whereClass = function(clss, cb) {
     let elements = [];
 
     if (this.parentSearch)
@@ -34,7 +41,7 @@ class ElementList {
     return this;
   }
 
-  whereId(id, cb) {
+  ElementList.prototype.whereId = function(id, cb) {
     let elements = [];
 
     if (this.parentSearch)
@@ -48,10 +55,13 @@ class ElementList {
     return this;
   }
 
-  whereTag(tag, cb) {
+  ElementList.prototype.whereTag = function(tag, cb) {
     let elements = [];
 
     if (this.parentSearch) elements = this.parentSearch.querySelectorAll(tag);
+    else if (ElementList.GLOBAL_PARENT){
+      elements = ElementList.GLOBAL_PARENT.querySelectorAll(tag);
+    }
     else elements = document.querySelectorAll(tag);
 
     for (let element of elements) {
@@ -61,7 +71,7 @@ class ElementList {
     return this;
   }
 
-  whereProp(values, cb) {
+  ElementList.prototype.whereProp = function(values, cb) {
     let elements = [];
 
     if (this.parentSearch)
@@ -77,7 +87,7 @@ class ElementList {
     return this;
   }
 
-  event(ev, cb) {
+  ElementList.prototype.event = function(ev, cb) {
     this.list.forEach(function (elementEv) {
       elementEv.element.addEventListener(ev, function (event) {
         event.element = elementEv;
@@ -89,7 +99,7 @@ class ElementList {
     return this;
   }
 
-  print() {
+  ElementList.prototype.print = function() {
     let elementsToShow = [];
 
     this.list.forEach(function (e) {
@@ -101,7 +111,7 @@ class ElementList {
     return this;
   }
 
-  values(type) {
+  ElementList.prototype.values = function(type) {
     let values = [];
 
     if (type == "checkbox") {
@@ -113,7 +123,7 @@ class ElementList {
       return values;
     }
   }
-}
+
 
 function elements() {
   return new ElementList();
