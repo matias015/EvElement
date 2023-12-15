@@ -1,6 +1,6 @@
 function ElementEv (tag, exists){
 
-    if (exists) {
+    if (tag instanceof HTMLElement) {
         this.element = tag;
     } else if (tag) {
         this.element = document.createElement(tag);
