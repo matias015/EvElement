@@ -7,7 +7,7 @@ function ElementEv (tag){
         this.element = document.querySelector(tag);
     }
     else {
-        this.element = document.createElement(tag) | null;
+        this.element = document.createElement(tag);
     }
 
     this.lastEventSetted = null;
@@ -237,10 +237,10 @@ ElementEv.prototype.withAttrs = function(pairs) {
     return copy;
 }
 
-ElementEv.prototype.appendChild = function(child) {
-    this.element.appendChild(child.get());
-    return this;
-}
+// ElementEv.prototype.appendChild = function(child) {
+//     this.element.appendChild(child.get());
+//     return this;
+// }
 
 ElementEv.prototype.lastChild = function() {
     return new ElementEv(
