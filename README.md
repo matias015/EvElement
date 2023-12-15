@@ -46,6 +46,18 @@ element().inParent(parent).whereClass('class-of-element');
 
 ```
 
+getting the original element
+```
+let HTMLElementObjetc = myEvElement.get();
+```
+
+check if an element has a specific tag
+```
+if(element.tagIs('div')){
+  // more code...
+}
+```
+
 Add events
 ```
 let button = _find('.my-button');
@@ -85,6 +97,7 @@ let myDiv = _find('.my-div');
 
 myDiv.createChild('<p>')
     .withText('text content')
+    .withAttrs({'attr1':'value', 'attr2':'value'})
     .withClasses(['class1','class2'])
     .withChildren([
         create('<span>').setText('span text').attr('id','myId'),
@@ -92,7 +105,6 @@ myDiv.createChild('<p>')
     ])
 
 myDiv.insert()
-
 ```
 final result is
 ```
@@ -103,6 +115,90 @@ final result is
         <span id="myId2">span text 2</span>
     </p>
 </div>
+```
+Other way to do it
+```
+let parent = _find('.parent');
+let child = create('div', 'i am a child element');
+
+child.insertInto(parent);
+```
+
+Deleting elements from the dom
+```
+let element = _find('.element-class');
+element.remove();
+```
+
+moving elements
+```
+let element = _find('.element-class');
+let newParent = _find('.new-parent-class');
+
+element.move(newParent);
+```
+
+Removing a element after determinated time
+```
+let element = _find('.element-class');
+element.removeAfter(2000, function(){
+  // todo after remove
+});
+```
+
+Toggle class after determinated time
+```
+let element = _find('.element-class');
+element.toggleAfter(2000, 'show');
+```
+
+Classes
+```
+if(element.hasClass('show')){
+  element.removeClass('show');
+}else {
+  element.addClass('show');
+}
+
+// toggle
+element.toggleClass('show'); 
+```
+
+Still in process
+```
 
 ```
 
+- Traversing
+
+Getting childs elements
+```
+let parent = _find('.parent');
+
+let lastChild = parent.lastChild();
+let firstChild = parent.firstChild();
+let secondChild = parent.child(2);
+```
+
+Accessing the parent element
+```
+let child = _find('.child');
+
+let parent = child.parent();
+let parentOfParent = child.parent(2);
+let parentOfParentOfParent = child.parent(3);
+```
+
+siblings
+```
+if(element.hasNextSibling()){
+  let nextSibling = element.nextSibling();
+}
+
+if(element.hasPrevSibling()){
+  let prevSibling = element.prevSibling();
+}
+```
+
+
+Still in process...
