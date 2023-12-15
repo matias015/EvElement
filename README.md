@@ -3,76 +3,100 @@ Small library to deal with elements
 
  - Searching an element
 
+Using a query
 ```
-new ElementEv(String query)
+let element = new ElementEv('.myClass');
+let element = new ElementEv('#myId');
 ```
-Creating an object with an loaded element
+Using loaded elements
 ```
-new ElementEv(document.querySelector(query), true)
+let loaded = document.querySelector(query);
+let element = new ElementEv(loaded);
 ```
+Others ways
 ```
-_find(String id|class|tag);
+let element = _find('.my-class');
 
-element().whereClass(String class, Callable callback);
+let element = element().whereClass('my-class', function(){
+  // create the item if it does not exists
+  return create('<p>', 'text content');
+});
 
-element().whereId(String id, Callable callback);
+element().whereId('my-id', function(){
+  return create('<p>', 'text content');
+});
 
-element().whereTag(String tagname, Callable callback);
+element().whereTag('div', function(){
+  return create('<div>', 'text content');
+}
 
-element().whereProp(Array propValue, Callable callback);
+element().whereProp(['type','checkbox'], function(){
+  return create('<input>').attr('type','checkbox');
+}
 ```
-you can set a parent where the search would be perform
 
-element().inParent(String identifier|HTMLElement parent).whereClass(String class);
+You can set a parent where the search would be perform
+```
+element().inParent('.class-of-parent').whereClass('class-of-element');
 
+or
 
-setting events
+let parent = _find('.my-parent-class');
+element().inParent(parent).whereClass('class-of-element');
 
+```
+
+Add events
+```
 let button = _find('.my-button');
 
 button.when('click').make(function(e){
     let clicked = e.element; // returns the EvElement of the target 
 })
 
-Another way
+or
 
 button.when('click', function(e){
     let clicked = e.element; // returns the EvElement of the target 
 })
-
+```
 
 unsetting events
-
+```
 button.unsetEvent('click');
+```
 
+- Properties
 
-ATRIBUTTES
-
-text content
-
+Text content
+```
 button.setText('Click me');
 
 if(button.textIs('click')){
     console.log('that is true!');
 }
 
-button.clear() // this will clear all the content, not only text, also nodes.
+button.clear() // will clear all the content, not only text, also nodes.
+```
 
+- append childs to elements
+```
+let myDiv = _find('.my-div');
 
-ADDING CHILDS TO ELEMENTS
-
-myDiv.appendChild('<p>')
+myDiv.createChild('<p>')
     .withText('text content')
     .withClasses(['class1','class2'])
     .withChildren([
         create('<span>').setText('span text').attr('id','myId'),
         create('<span>').setText('span text 2').attr('id','myId2')
     ])
-    .insert()
+
+myDiv.insert()
+
 
 final result is
 
-<div>
+<div class="my-div">
     <p class="class1 class2">
         'text content'
         <span id="myId">span text</span>
@@ -80,5 +104,5 @@ final result is
     </p>
 </div>
 
-
+```
 
