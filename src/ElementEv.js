@@ -194,9 +194,7 @@ ElementEv.prototype.insertInto = function(parent){
 }
 
 ElementEv.prototype.withText = function(c) {
-    
     this.lastElementCreated.textContent = c;
-
     return this;
 }
 
@@ -237,24 +235,22 @@ ElementEv.prototype.withAttrs = function(pairs) {
     return copy;
 }
 
-// ElementEv.prototype.appendChild = function(child) {
-//     this.element.appendChild(child.get());
-//     return this;
-// }
-
 ElementEv.prototype.lastChild = function() {
     return new ElementEv(
-        this.element.children[this.element.children.length - 1],
-        true
+        this.element.children[this.element.children.length - 1]
     );
 }
 
 ElementEv.prototype.firstChild = function() {
-    return new ElementEv(this.element.children[0], true);
+    return new ElementEv(this.element.children[0]);
+}
+
+ElementEv.prototype.child = function(index) {
+    return new ElementEv(this.element.children[index-1]);
 }
 
 ElementEv.prototype.parent = function(deep) {
-    if (!deep) return new ElementEv(this.element.parentElement, true);
+    if (!deep) return new ElementEv(this.element.parentElement);
 
     let parent = this.element.parentElement;
 
@@ -262,7 +258,7 @@ ElementEv.prototype.parent = function(deep) {
         parent = parent.parentElement;
     }
 
-    return new ElementEv(parent, true);
+    return new ElementEv(parent);
 }
 
 ElementEv.prototype.hasNextSibling = function() {
@@ -276,7 +272,7 @@ ElementEv.prototype.hasPrevSibling = function() {
 }
 
 ElementEv.prototype.prevSibling = function(deep) {
-    if (!deep) return new ElementEv(this.element.previousSibling, true);
+    if (!deep) return new ElementEv(this.element.previousSibling);
 
     let sib = this.element.previousSibling;
 
@@ -284,11 +280,11 @@ ElementEv.prototype.prevSibling = function(deep) {
         sib = sib.previousSibling;
     }
 
-    return new ElementEv(sib, true);
+    return new ElementEv(sib);
 }
 
 ElementEv.prototype.nextSibling = function(deep) {
-    if (!deep) return new ElementEv(this.element.nextSibling, true);
+    if (!deep) return new ElementEv(this.element.nextSibling);
 
     let sib = this.element.nextSibling;
 
@@ -296,7 +292,7 @@ ElementEv.prototype.nextSibling = function(deep) {
         sib = sib.nextSibling;
     }
 
-    return new ElementEv(sib, true);
+    return new ElementEv(sib);
 }
 
 // ELEMENT
@@ -305,24 +301,8 @@ ElementEv.prototype.get = function() {
     return this.element;
 }
 
-ElementEv.prototype.value = function() {
-    let field = this.element;
-
-    if (field.type === "checkbox") {
-        return field.checked ? field.value : null;
-    } else if (field.type === "radio") {
-        return field.checked ? field.value : null;
-    } else {
-        return field.value;
-    }
-}
-
-ElementEv.prototype.valueIs = function(val) {
-    return this.element.value == val;
-}
-
 ElementEv.prototype.tagIs = function(tag) {
-    return this.element.tagName == tag.toUpperCase();
+    return this.element.tagName === tag.toUpperCase();
 }
 
 ElementEv.prototype.remove = function() {
@@ -481,7 +461,7 @@ ElementEv.prototype.visible = function(opacity) {
 
 function element(tag) {
     if (tag instanceof HTMLElement) {
-        return new ElementEv(tag, true);
+        return new ElementEv(tag);
     }
     return new ElementEv(tag);
 }
@@ -510,5 +490,5 @@ function __ElementEv__multiFilterConcat__(list, prefix) {
 }
 
 function _find(query) {
-    return new ElementEv(document.querySelector(query), true);
+    return new ElementEv(document.querySelector(query));
 }

@@ -35,7 +35,7 @@ ElementList.GLOBAL_PARENT = null;
     else elements = document.querySelectorAll("." + clss);
 
     for (let element of elements) {
-      this.list.push(new ElementEv(element, true));
+      this.list.push(new ElementEv(element));
     }
 
     return this;
@@ -49,7 +49,7 @@ ElementList.GLOBAL_PARENT = null;
     else elements = document.querySelectorAll("#" + id);
 
     for (let element of elements) {
-      this.list.push(new ElementEv(element, true));
+      this.list.push(new ElementEv(element));
     }
 
     return this;
@@ -65,7 +65,7 @@ ElementList.GLOBAL_PARENT = null;
     else elements = document.querySelectorAll(tag);
 
     for (let element of elements) {
-      this.list.push(new ElementEv(element, true));
+      this.list.push(new ElementEv(element));
     }
 
     return this;
@@ -81,7 +81,7 @@ ElementList.GLOBAL_PARENT = null;
     else elements = document.querySelectorAll(`[${values[0]}=${values[1]}]`);
 
     for (let element of elements) {
-      this.list.push(new ElementEv(element, true));
+      this.list.push(new ElementEv(element));
     }
 
     return this;
