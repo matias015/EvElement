@@ -1,4 +1,4 @@
-Small library to deal with elements
+EvElement is a small library to deal with elements and list of elements. (still in development and testing)
 
 
  - Searching an element
