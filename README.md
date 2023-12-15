@@ -3,9 +3,9 @@ Small library to deal with elements
 
  - Searching an element
 
-'''
+´´´
 new ElementEv(String query)
-'''
+´´´
 Creating an object with an loaded element
 
 new ElementEv(document.querySelector(query), true)
