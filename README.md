@@ -35,7 +35,7 @@ element().whereProp(['type','checkbox'], function(){
 }
 ```
 
-You can set a parent where the search would be perform
+you can choose the parent where the search will be performed
 ```
 element().inParent('.class-of-parent').whereClass('class-of-element');
 
@@ -46,7 +46,7 @@ element().inParent(parent).whereClass('class-of-element');
 
 ```
 
-getting the original element
+Getting the original element
 ```
 let HTMLElementObjetc = myEvElement.get();
 ```
@@ -90,6 +90,17 @@ if(button.textIs('click')){
 
 button.clear() // will clear all the content, not only text, also nodes.
 ```
+Classes
+```
+if(element.hasClass('show')){
+  element.removeClass('show');
+}else {
+  element.addClass('show');
+}
+
+// toggle
+element.toggleClass('show'); 
+```
 
 - append childs to elements
 ```
@@ -124,7 +135,7 @@ let child = create('div', 'i am a child element');
 child.insertInto(parent);
 ```
 
-Deleting elements from the dom
+Deleting elements from the DOM
 ```
 let element = _find('.element-class');
 element.remove();
@@ -152,22 +163,6 @@ let element = _find('.element-class');
 element.toggleAfter(2000, 'show');
 ```
 
-Classes
-```
-if(element.hasClass('show')){
-  element.removeClass('show');
-}else {
-  element.addClass('show');
-}
-
-// toggle
-element.toggleClass('show'); 
-```
-
-Still in process
-```
-
-```
 
 - Traversing
 
