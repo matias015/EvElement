@@ -7,10 +7,10 @@ Small library to deal with elements
 new ElementEv(String query)
 ```
 Creating an object with an loaded element
-
+```
 new ElementEv(document.querySelector(query), true)
-
-
+```
+```
 _find(String id|class|tag);
 
 element().whereClass(String class, Callable callback);
@@ -20,7 +20,7 @@ element().whereId(String id, Callable callback);
 element().whereTag(String tagname, Callable callback);
 
 element().whereProp(Array propValue, Callable callback);
-
+```
 you can set a parent where the search would be perform
 
 element().inParent(String identifier|HTMLElement parent).whereClass(String class);
