@@ -2,10 +2,12 @@ function ElementEv (tag){
 
     if (tag instanceof HTMLElement) {
         this.element = tag;
-    } else if (typeof tag === 'string') {
-        this.element = document.createElement(tag);
-    } else {
-        this.element = null;
+    }
+    else if (tag.startsWith('.') || tag.startsWith('#')) {
+        this.element = document.querySelector(tag);
+    }
+    else {
+        this.element = document.createElement(tag) | null;
     }
 
     this.lastEventSetted = null;
