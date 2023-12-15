@@ -1,8 +1,8 @@
-function ElementEv (tag, exists){
+function ElementEv (tag){
 
     if (tag instanceof HTMLElement) {
         this.element = tag;
-    } else if (tag) {
+    } else if (typeof tag === 'string') {
         this.element = document.createElement(tag);
     } else {
         this.element = null;
