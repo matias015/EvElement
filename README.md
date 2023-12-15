@@ -93,9 +93,9 @@ myDiv.createChild('<p>')
 
 myDiv.insert()
 
-
+```
 final result is
-
+```
 <div class="my-div">
     <p class="class1 class2">
         'text content'
